@@ -37,11 +37,13 @@ class CategoryResource extends Resource
                 TextInput::make('title')
                     ->required()
                     ->reactive()
+                    ->debounce(500)
                     ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state))),
 
                 TextInput::make('slug')
                     ->readOnly()
                     ->required()
+                    ->debounce(500)
                     ->unique(Category::class, 'slug', fn($record) => $record),
 
                 Select::make('type')
@@ -49,10 +51,8 @@ class CategoryResource extends Resource
                         Category::TYPE_POST => 'Post',
                         Category::TYPE_SERVICE => 'Service',
                     ])
-                    ->required(),
-
-                Textarea::make('description')
-                    ->autosize()
+                    ->native('false')
+                    ->searchable()
                     ->required(),
 
                 Placeholder::make('created_at')
@@ -77,7 +77,9 @@ class CategoryResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('description'),
+                TextColumn::make('type')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //

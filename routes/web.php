@@ -7,4 +7,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/debugtaikucing', [PostController::class, 'debugtaikucing']);
+//Route::get('/debugtaikucing', [PostController::class, 'debugtaikucing']);
+
+Route::get('/black', function() {
+    return view('welcome-dark');
+});

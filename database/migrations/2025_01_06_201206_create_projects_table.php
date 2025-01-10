@@ -14,11 +14,20 @@ return new class extends Migration {
             $table->string('slug');
             $table->text('description');
             $table->string('client_name');
+            $table->string('architect_name');
             $table->string('location');
             $table->date('start_date');
             $table->date('end_date');
             $table->string('status');
             $table->string('featured');
+
+            //
+            $table->text('image');
+            $table->string('project_type');
+            $table->string('budget');
+            $table->string('completion');
+
+
             $table->timestamps();
         });
     }
