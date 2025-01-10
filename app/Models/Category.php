@@ -16,7 +16,6 @@ class Category extends Model
         'title',
         'slug',
         'type',
-        'description',
     ];
 
     const TYPE_POST = 'post';

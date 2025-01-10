@@ -39,13 +39,14 @@ class PostResource extends Resource
             ->schema([
                 Select::make('user_id')
                     ->required()
+                    ->default(fn() => auth()->id())
                     ->relationship('user', 'name'),
 
                 Select::make('categories')
+                    ->preload()
                     ->options(
-                        Category::where('type')->pluck('title', 'id')
-                    )
-                    ->preload(),
+                        Category::forServices()->pluck('title')
+                    ),
 
                 TextInput::make('title')
                     ->required()

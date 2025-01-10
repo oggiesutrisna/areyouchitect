@@ -42,7 +42,8 @@ class ServiceResource extends Resource
                     ->unique(Service::class, 'slug', fn($record) => $record),
 
                 Select::make('categories')
-                    ->multiple()
+                    ->native('false')
+                    ->searchable()
                     ->preload()
                     ->options(
                         Category::forServices()->pluck('title', 'id')
