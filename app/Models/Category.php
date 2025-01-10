@@ -4,9 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Category extends Model
 {
@@ -19,8 +16,8 @@ class Category extends Model
     ];
 
     const TYPE_POST = 'post';
-    const TYPE_SERVICE = 'service';
 
+    const TYPE_SERVICE = 'service';
 
     public function posts()
     {
@@ -41,6 +38,4 @@ class Category extends Model
     {
         return $query->where('type', self::TYPE_SERVICE);
     }
-
-
 }

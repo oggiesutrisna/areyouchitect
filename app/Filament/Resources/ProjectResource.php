@@ -22,7 +22,6 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
-use Nette\Utils\ImageColor;
 
 class ProjectResource extends Resource
 {
@@ -41,19 +40,19 @@ class ProjectResource extends Resource
                         TextInput::make('title')
                             ->required()
                             ->reactive()
-                            ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state))),
+                            ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
 
                         TextInput::make('slug')
                             ->readOnly()
                             ->required()
-                            ->unique(Category::class, 'slug', fn($record) => $record),
+                            ->unique(Category::class, 'slug', fn ($record) => $record),
 
                         Select::make('type')
                             ->options([
                                 Category::TYPE_POST => 'Post',
                                 Category::TYPE_SERVICE => 'Service',
                             ])
-                            ->required()
+                            ->required(),
                     ])
                     ->required()
                     ->relationship('category', 'title'),
@@ -62,12 +61,12 @@ class ProjectResource extends Resource
                     ->required()
                     ->debounce(500)
                     ->reactive()
-                    ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state))),
+                    ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
 
                 TextInput::make('slug')
                     ->readOnly()
                     ->required()
-                    ->unique(Project::class, 'slug', fn($record) => $record),
+                    ->unique(Project::class, 'slug', fn ($record) => $record),
 
                 TextInput::make('description')
                     ->required(),
@@ -168,11 +167,11 @@ class ProjectResource extends Resource
 
                 Placeholder::make('created_at')
                     ->label('Created Date')
-                    ->content(fn(?Project $record): string => $record?->created_at?->diffForHumans() ?? '-'),
+                    ->content(fn (?Project $record): string => $record?->created_at?->diffForHumans() ?? '-'),
 
                 Placeholder::make('updated_at')
                     ->label('Last Modified Date')
-                    ->content(fn(?Project $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
+                    ->content(fn (?Project $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
             ]);
     }
 
@@ -208,17 +207,17 @@ class ProjectResource extends Resource
                 TextColumn::make('featured'),
             ])
             ->filters([
-        //
-    ])
-        ->actions([
-            EditAction::make(),
-            DeleteAction::make(),
-        ])
-        ->bulkActions([
-            BulkActionGroup::make([
-                DeleteBulkAction::make(),
-            ]),
-        ]);
+                //
+            ])
+            ->actions([
+                EditAction::make(),
+                DeleteAction::make(),
+            ])
+            ->bulkActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 
     public static function getPages(): array

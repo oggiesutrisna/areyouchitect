@@ -4,12 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Models\Category;
-use App\Models\Post;
-use App\Models\Service;
-use Filament\Forms\Components\MorphToSelect;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -19,7 +15,6 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
@@ -38,13 +33,13 @@ class CategoryResource extends Resource
                     ->required()
                     ->reactive()
                     ->debounce(500)
-                    ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state))),
+                    ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
 
                 TextInput::make('slug')
                     ->readOnly()
                     ->required()
                     ->debounce(500)
-                    ->unique(Category::class, 'slug', fn($record) => $record),
+                    ->unique(Category::class, 'slug', fn ($record) => $record),
 
                 Select::make('type')
                     ->options([
@@ -57,11 +52,11 @@ class CategoryResource extends Resource
 
                 Placeholder::make('created_at')
                     ->label('Created Date')
-                    ->content(fn(?Category $record): string => $record?->created_at?->diffForHumans() ?? '-'),
+                    ->content(fn (?Category $record): string => $record?->created_at?->diffForHumans() ?? '-'),
 
                 Placeholder::make('updated_at')
                     ->label('Last Modified Date')
-                    ->content(fn(?Category $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
+                    ->content(fn (?Category $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
             ]);
     }
 
