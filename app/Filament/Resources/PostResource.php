@@ -5,11 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PostResource\Pages;
 use App\Models\Category;
 use App\Models\Post;
-use App\Models\Service;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\MorphToSelect;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -39,7 +37,7 @@ class PostResource extends Resource
             ->schema([
                 Select::make('user_id')
                     ->required()
-                    ->default(fn() => auth()->id())
+                    ->default(fn () => auth()->id())
                     ->relationship('user', 'name'),
 
                 Select::make('categories')
@@ -51,12 +49,12 @@ class PostResource extends Resource
                 TextInput::make('title')
                     ->required()
                     ->reactive()
-                    ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state))),
+                    ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
 
                 TextInput::make('slug')
                     ->required()
                     ->readOnly()
-                    ->unique(Post::class, 'slug', fn($record) => $record),
+                    ->unique(Post::class, 'slug', fn ($record) => $record),
 
                 MarkdownEditor::make('content')
                     ->required(),
@@ -74,11 +72,11 @@ class PostResource extends Resource
 
                 Placeholder::make('created_at')
                     ->label('Created Date')
-                    ->content(fn(?Post $record): string => $record?->created_at?->diffForHumans() ?? '-'),
+                    ->content(fn (?Post $record): string => $record?->created_at?->diffForHumans() ?? '-'),
 
                 Placeholder::make('updated_at')
                     ->label('Last Modified Date')
-                    ->content(fn(?Post $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
+                    ->content(fn (?Post $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
             ]);
     }
 

@@ -34,12 +34,12 @@ class ServiceResource extends Resource
                 TextInput::make('title')
                     ->required()
                     ->reactive()
-                    ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state))),
+                    ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
 
                 TextInput::make('slug')
                     ->disabled()
                     ->required()
-                    ->unique(Service::class, 'slug', fn($record) => $record),
+                    ->unique(Service::class, 'slug', fn ($record) => $record),
 
                 Select::make('categories')
                     ->native('false')
@@ -63,11 +63,11 @@ class ServiceResource extends Resource
 
                 Placeholder::make('created_at')
                     ->label('Created Date')
-                    ->content(fn(?Service $record): string => $record?->created_at?->diffForHumans() ?? '-'),
+                    ->content(fn (?Service $record): string => $record?->created_at?->diffForHumans() ?? '-'),
 
                 Placeholder::make('updated_at')
                     ->label('Last Modified Date')
-                    ->content(fn(?Service $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
+                    ->content(fn (?Service $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
             ]);
     }
 
